@@ -1,6 +1,7 @@
 package org.jenkinsci.plugins.kubernetes.cli;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import hudson.EnvVars;
  */
 final class KubeConfigExpander extends EnvironmentExpander {
 
+    @Serial
     private static final long serialVersionUID = 1;
 
     private final Map<String, String> overrides;

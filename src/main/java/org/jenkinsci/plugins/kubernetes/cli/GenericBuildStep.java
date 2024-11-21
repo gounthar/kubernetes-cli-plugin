@@ -1,6 +1,7 @@
 package org.jenkinsci.plugins.kubernetes.cli;
 
 import java.io.File;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import hudson.FilePath;
 import hudson.model.TaskListener;
 
 public class GenericBuildStep extends AbstractStepExecutionImpl {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED", justification = "not needed on deserialization")
@@ -81,6 +83,7 @@ public class GenericBuildStep extends AbstractStepExecutionImpl {
     }
 
     private static final class Callback extends BodyExecutionCallback.TailCall {
+        @Serial
         private static final long serialVersionUID = 1L;
         private final List<String> configFiles;
 

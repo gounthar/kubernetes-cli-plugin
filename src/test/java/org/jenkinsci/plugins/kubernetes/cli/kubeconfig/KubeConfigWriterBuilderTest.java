@@ -42,26 +42,28 @@ public class KubeConfigWriterBuilderTest {
 
     private static KubernetesAuthKubeconfig dummyKubeConfigAuth() {
         return new KubernetesAuthKubeconfig(
-                "---\n" +
-                        "clusters:\n" +
-                        "- name: \"existing-cluster\"\n" +
-                        "  cluster:\n" +
-                        "    server: https://existing-cluster\n" +
-                        "contexts:\n" +
-                        "- context:\n" +
-                        "    cluster: \"existing-cluster\"\n" +
-                        "    namespace: \"existing-namespace\"\n" +
-                        "  name: \"existing-context\"\n" +
-                        "- context:\n" +
-                        "    cluster: \"existing-cluster\"\n" +
-                        "    namespace: \"unused-namespace\"\n" +
-                        "  name: \"unused-context\"\n" +
-                        "current-context: \"existing-context\"\n" +
-                        "users:\n" +
-                        "- name: \"existing-credential\"\n" +
-                        "  user:\n" +
-                        "    password: \"existing-password\"\n" +
-                        "    username: \"existing-user\"\n");
+                """
+                ---
+                clusters:
+                - name: "existing-cluster"
+                  cluster:
+                    server: https://existing-cluster
+                contexts:
+                - context:
+                    cluster: "existing-cluster"
+                    namespace: "existing-namespace"
+                  name: "existing-context"
+                - context:
+                    cluster: "existing-cluster"
+                    namespace: "unused-namespace"
+                  name: "unused-context"
+                current-context: "existing-context"
+                users:
+                - name: "existing-credential"
+                  user:
+                    password: "existing-password"
+                    username: "existing-user"
+                """);
     }
 
     @Before
@@ -97,11 +99,13 @@ public class KubeConfigWriterBuilderTest {
         ConfigBuilder configBuilder = configWriter.getConfigBuilderInCluster();
         String configDumpContent = dumpBuilder(configBuilder);
 
-        assertEquals("---\n" +
-                "contexts:\n" +
-                "- context: {}\n" +
-                "  name: \"k8s\"\n" +
-                "current-context: \"k8s\"\n", configDumpContent);
+        assertEquals("""
+                ---
+                contexts:
+                - context: {}
+                  name: "k8s"
+                current-context: "k8s"
+                """, configDumpContent);
     }
 
     @Test
@@ -119,12 +123,14 @@ public class KubeConfigWriterBuilderTest {
         ConfigBuilder configBuilder = configWriter.getConfigBuilderInCluster();
         String configDumpContent = dumpBuilder(configBuilder);
 
-        assertEquals("---\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    namespace: \"test-namespace\"\n" +
-                "  name: \"k8s\"\n" +
-                "current-context: \"k8s\"\n", configDumpContent);
+        assertEquals("""
+                ---
+                contexts:
+                - context:
+                    namespace: "test-namespace"
+                  name: "k8s"
+                current-context: "k8s"
+                """, configDumpContent);
     }
 
     @Test
@@ -142,12 +148,14 @@ public class KubeConfigWriterBuilderTest {
         ConfigBuilder configBuilder = configWriter.getConfigBuilderInCluster();
         String configDumpContent = dumpBuilder(configBuilder);
 
-        assertEquals("---\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    namespace: \"test-namespace\"\n" +
-                "  name: \"test-context\"\n" +
-                "current-context: \"test-context\"\n", configDumpContent);
+        assertEquals("""
+                ---
+                contexts:
+                - context:
+                    namespace: "test-namespace"
+                  name: "test-context"
+                current-context: "test-context"
+                """, configDumpContent);
     }
 
     @Test
@@ -167,23 +175,25 @@ public class KubeConfigWriterBuilderTest {
         ConfigBuilder configBuilder = configWriter.getConfigBuilderWithAuth("test-credential", auth);
         String configDumpContent = dumpBuilder(configBuilder);
 
-        assertEquals("---\n" +
-                "clusters:\n" +
-                "- cluster:\n" +
-                "    insecure-skip-tls-verify: true\n" +
-                "    server: \"https://localhost:6443\"\n" +
-                "  name: \"k8s\"\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    cluster: \"k8s\"\n" +
-                "    user: \"test-credential\"\n" +
-                "  name: \"k8s\"\n" +
-                "current-context: \"k8s\"\n" +
-                "users:\n" +
-                "- name: \"test-credential\"\n" +
-                "  user:\n" +
-                "    password: \"test-password\"\n" +
-                "    username: \"test-user\"\n", configDumpContent);
+        assertEquals("""
+                ---
+                clusters:
+                - cluster:
+                    insecure-skip-tls-verify: true
+                    server: "https://localhost:6443"
+                  name: "k8s"
+                contexts:
+                - context:
+                    cluster: "k8s"
+                    user: "test-credential"
+                  name: "k8s"
+                current-context: "k8s"
+                users:
+                - name: "test-credential"
+                  user:
+                    password: "test-password"
+                    username: "test-user"
+                """, configDumpContent);
     }
 
     @Test
@@ -203,24 +213,25 @@ public class KubeConfigWriterBuilderTest {
         ConfigBuilder configBuilder = configWriter.getConfigBuilderWithAuth("test-credential", auth);
         String configDumpContent = dumpBuilder(configBuilder);
 
-        assertEquals("---\n" +
-                "clusters:\n" +
-                "- cluster:\n" +
-                "    certificate-authority-data: \"LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCnRlc3QtY2VydGlmaWNhdGUKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQ==\"\n"
-                +
-                "    server: \"https://localhost:6443\"\n" +
-                "  name: \"k8s\"\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    cluster: \"k8s\"\n" +
-                "    user: \"test-credential\"\n" +
-                "  name: \"k8s\"\n" +
-                "current-context: \"k8s\"\n" +
-                "users:\n" +
-                "- name: \"test-credential\"\n" +
-                "  user:\n" +
-                "    password: \"test-password\"\n" +
-                "    username: \"test-user\"\n", configDumpContent);
+        assertEquals("""
+                ---
+                clusters:
+                - cluster:
+                    certificate-authority-data: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCnRlc3QtY2VydGlmaWNhdGUKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQ=="
+                    server: "https://localhost:6443"
+                  name: "k8s"
+                contexts:
+                - context:
+                    cluster: "k8s"
+                    user: "test-credential"
+                  name: "k8s"
+                current-context: "k8s"
+                users:
+                - name: "test-credential"
+                  user:
+                    password: "test-password"
+                    username: "test-user"
+                """, configDumpContent);
     }
 
     @Test
@@ -240,23 +251,25 @@ public class KubeConfigWriterBuilderTest {
         ConfigBuilder configBuilder = configWriter.getConfigBuilderWithAuth("test-credential", auth);
         String configDumpContent = dumpBuilder(configBuilder);
 
-        assertEquals("---\n" +
-                "clusters:\n" +
-                "- cluster:\n" +
-                "    insecure-skip-tls-verify: true\n" +
-                "    server: \"https://localhost:6443\"\n" +
-                "  name: \"test-cluster\"\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    cluster: \"test-cluster\"\n" +
-                "    user: \"test-credential\"\n" +
-                "  name: \"k8s\"\n" +
-                "current-context: \"k8s\"\n" +
-                "users:\n" +
-                "- name: \"test-credential\"\n" +
-                "  user:\n" +
-                "    password: \"test-password\"\n" +
-                "    username: \"test-user\"\n", configDumpContent);
+        assertEquals("""
+                ---
+                clusters:
+                - cluster:
+                    insecure-skip-tls-verify: true
+                    server: "https://localhost:6443"
+                  name: "test-cluster"
+                contexts:
+                - context:
+                    cluster: "test-cluster"
+                    user: "test-credential"
+                  name: "k8s"
+                current-context: "k8s"
+                users:
+                - name: "test-credential"
+                  user:
+                    password: "test-password"
+                    username: "test-user"
+                """, configDumpContent);
     }
 
     @Test
@@ -276,24 +289,26 @@ public class KubeConfigWriterBuilderTest {
         ConfigBuilder configBuilder = configWriter.getConfigBuilderWithAuth("test-credential", auth);
         String configDumpContent = dumpBuilder(configBuilder);
 
-        assertEquals("---\n" +
-                "clusters:\n" +
-                "- cluster:\n" +
-                "    insecure-skip-tls-verify: true\n" +
-                "    server: \"https://localhost:6443\"\n" +
-                "  name: \"k8s\"\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    cluster: \"k8s\"\n" +
-                "    namespace: \"test-namespace\"\n" +
-                "    user: \"test-credential\"\n" +
-                "  name: \"k8s\"\n" +
-                "current-context: \"k8s\"\n" +
-                "users:\n" +
-                "- name: \"test-credential\"\n" +
-                "  user:\n" +
-                "    password: \"test-password\"\n" +
-                "    username: \"test-user\"\n", configDumpContent);
+        assertEquals("""
+                ---
+                clusters:
+                - cluster:
+                    insecure-skip-tls-verify: true
+                    server: "https://localhost:6443"
+                  name: "k8s"
+                contexts:
+                - context:
+                    cluster: "k8s"
+                    namespace: "test-namespace"
+                    user: "test-credential"
+                  name: "k8s"
+                current-context: "k8s"
+                users:
+                - name: "test-credential"
+                  user:
+                    password: "test-password"
+                    username: "test-user"
+                """, configDumpContent);
     }
 
     @Test
@@ -313,23 +328,25 @@ public class KubeConfigWriterBuilderTest {
         ConfigBuilder configBuilder = configWriter.getConfigBuilderWithAuth("test-credential", auth);
         String configDumpContent = dumpBuilder(configBuilder);
 
-        assertEquals("---\n" +
-                "clusters:\n" +
-                "- cluster:\n" +
-                "    insecure-skip-tls-verify: true\n" +
-                "    server: \"https://localhost:6443\"\n" +
-                "  name: \"k8s\"\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    cluster: \"k8s\"\n" +
-                "    user: \"test-credential\"\n" +
-                "  name: \"test-context\"\n" +
-                "current-context: \"test-context\"\n" +
-                "users:\n" +
-                "- name: \"test-credential\"\n" +
-                "  user:\n" +
-                "    password: \"test-password\"\n" +
-                "    username: \"test-user\"\n", configDumpContent);
+        assertEquals("""
+                ---
+                clusters:
+                - cluster:
+                    insecure-skip-tls-verify: true
+                    server: "https://localhost:6443"
+                  name: "k8s"
+                contexts:
+                - context:
+                    cluster: "k8s"
+                    user: "test-credential"
+                  name: "test-context"
+                current-context: "test-context"
+                users:
+                - name: "test-credential"
+                  user:
+                    password: "test-password"
+                    username: "test-user"
+                """, configDumpContent);
     }
 
     @Test
@@ -351,26 +368,28 @@ public class KubeConfigWriterBuilderTest {
 
         // asserts that:
         // * kubeconfig is simply imported
-        assertEquals("---\n" +
-                "clusters:\n" +
-                "- cluster:\n" +
-                "    server: \"https://existing-cluster\"\n" +
-                "  name: \"existing-cluster\"\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    cluster: \"existing-cluster\"\n" +
-                "    namespace: \"existing-namespace\"\n" +
-                "  name: \"existing-context\"\n" +
-                "- context:\n" +
-                "    cluster: \"existing-cluster\"\n" +
-                "    namespace: \"unused-namespace\"\n" +
-                "  name: \"unused-context\"\n" +
-                "current-context: \"existing-context\"\n" +
-                "users:\n" +
-                "- name: \"existing-credential\"\n" +
-                "  user:\n" +
-                "    password: \"existing-password\"\n" +
-                "    username: \"existing-user\"\n", configDumpContent);
+        assertEquals("""
+                ---
+                clusters:
+                - cluster:
+                    server: "https://existing-cluster"
+                  name: "existing-cluster"
+                contexts:
+                - context:
+                    cluster: "existing-cluster"
+                    namespace: "existing-namespace"
+                  name: "existing-context"
+                - context:
+                    cluster: "existing-cluster"
+                    namespace: "unused-namespace"
+                  name: "unused-context"
+                current-context: "existing-context"
+                users:
+                - name: "existing-credential"
+                  user:
+                    password: "existing-password"
+                    username: "existing-user"
+                """, configDumpContent);
     }
 
     @Test
@@ -394,32 +413,33 @@ public class KubeConfigWriterBuilderTest {
         // * kubeconfig is imported
         // * a new cluster is created with the CA and serverURL
         // * the cluster is used by the existing context
-        assertEquals("---\n" +
-                "clusters:\n" +
-                "- cluster:\n" +
-                "    server: \"https://existing-cluster\"\n" +
-                "  name: \"existing-cluster\"\n" +
-                "- cluster:\n" +
-                "    certificate-authority-data: \"LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCnRlc3QtY2VydGlmaWNhdGUKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQ==\"\n"
-                +
-                "    insecure-skip-tls-verify: false\n" +
-                "    server: \"https://localhost:6443\"\n" +
-                "  name: \"k8s\"\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    cluster: \"k8s\"\n" +
-                "    namespace: \"existing-namespace\"\n" +
-                "  name: \"existing-context\"\n" +
-                "- context:\n" +
-                "    cluster: \"existing-cluster\"\n" +
-                "    namespace: \"unused-namespace\"\n" +
-                "  name: \"unused-context\"\n" +
-                "current-context: \"existing-context\"\n" +
-                "users:\n" +
-                "- name: \"existing-credential\"\n" +
-                "  user:\n" +
-                "    password: \"existing-password\"\n" +
-                "    username: \"existing-user\"\n", configDumpContent);
+        assertEquals("""
+                ---
+                clusters:
+                - cluster:
+                    server: "https://existing-cluster"
+                  name: "existing-cluster"
+                - cluster:
+                    certificate-authority-data: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCnRlc3QtY2VydGlmaWNhdGUKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQ=="
+                    insecure-skip-tls-verify: false
+                    server: "https://localhost:6443"
+                  name: "k8s"
+                contexts:
+                - context:
+                    cluster: "k8s"
+                    namespace: "existing-namespace"
+                  name: "existing-context"
+                - context:
+                    cluster: "existing-cluster"
+                    namespace: "unused-namespace"
+                  name: "unused-context"
+                current-context: "existing-context"
+                users:
+                - name: "existing-credential"
+                  user:
+                    password: "existing-password"
+                    username: "existing-user"
+                """, configDumpContent);
     }
 
     @Test
@@ -444,30 +464,32 @@ public class KubeConfigWriterBuilderTest {
         // * a new cluster is created with the serverURL
         // * the cluster is used by the existing context
         // * the namespace is set for the existing context
-        assertEquals("---\n" +
-                "clusters:\n" +
-                "- cluster:\n" +
-                "    server: \"https://existing-cluster\"\n" +
-                "  name: \"existing-cluster\"\n" +
-                "- cluster:\n" +
-                "    insecure-skip-tls-verify: true\n" +
-                "    server: \"https://localhost:6443\"\n" +
-                "  name: \"k8s\"\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    cluster: \"k8s\"\n" +
-                "    namespace: \"new-namespace\"\n" +
-                "  name: \"existing-context\"\n" +
-                "- context:\n" +
-                "    cluster: \"existing-cluster\"\n" +
-                "    namespace: \"unused-namespace\"\n" +
-                "  name: \"unused-context\"\n" +
-                "current-context: \"existing-context\"\n" +
-                "users:\n" +
-                "- name: \"existing-credential\"\n" +
-                "  user:\n" +
-                "    password: \"existing-password\"\n" +
-                "    username: \"existing-user\"\n", configDumpContent);
+        assertEquals("""
+                ---
+                clusters:
+                - cluster:
+                    server: "https://existing-cluster"
+                  name: "existing-cluster"
+                - cluster:
+                    insecure-skip-tls-verify: true
+                    server: "https://localhost:6443"
+                  name: "k8s"
+                contexts:
+                - context:
+                    cluster: "k8s"
+                    namespace: "new-namespace"
+                  name: "existing-context"
+                - context:
+                    cluster: "existing-cluster"
+                    namespace: "unused-namespace"
+                  name: "unused-context"
+                current-context: "existing-context"
+                users:
+                - name: "existing-credential"
+                  user:
+                    password: "existing-password"
+                    username: "existing-user"
+                """, configDumpContent);
     }
 
     @Test
@@ -491,30 +513,32 @@ public class KubeConfigWriterBuilderTest {
         // * kubeconfig is imported
         // * a new cluster is created with the serverURL and the clusterName
         // * the cluster is used by the existing context
-        assertEquals("---\n" +
-                "clusters:\n" +
-                "- cluster:\n" +
-                "    server: \"https://existing-cluster\"\n" +
-                "  name: \"existing-cluster\"\n" +
-                "- cluster:\n" +
-                "    insecure-skip-tls-verify: true\n" +
-                "    server: \"https://localhost:6443\"\n" +
-                "  name: \"new-cluster\"\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    cluster: \"new-cluster\"\n" +
-                "    namespace: \"existing-namespace\"\n" +
-                "  name: \"existing-context\"\n" +
-                "- context:\n" +
-                "    cluster: \"existing-cluster\"\n" +
-                "    namespace: \"unused-namespace\"\n" +
-                "  name: \"unused-context\"\n" +
-                "current-context: \"existing-context\"\n" +
-                "users:\n" +
-                "- name: \"existing-credential\"\n" +
-                "  user:\n" +
-                "    password: \"existing-password\"\n" +
-                "    username: \"existing-user\"\n", configDumpContent);
+        assertEquals("""
+                ---
+                clusters:
+                - cluster:
+                    server: "https://existing-cluster"
+                  name: "existing-cluster"
+                - cluster:
+                    insecure-skip-tls-verify: true
+                    server: "https://localhost:6443"
+                  name: "new-cluster"
+                contexts:
+                - context:
+                    cluster: "new-cluster"
+                    namespace: "existing-namespace"
+                  name: "existing-context"
+                - context:
+                    cluster: "existing-cluster"
+                    namespace: "unused-namespace"
+                  name: "unused-context"
+                current-context: "existing-context"
+                users:
+                - name: "existing-credential"
+                  user:
+                    password: "existing-password"
+                    username: "existing-user"
+                """, configDumpContent);
     }
 
     @Test
@@ -538,30 +562,32 @@ public class KubeConfigWriterBuilderTest {
         // * context is switched
         // * a new cluster is created with the serverURL
         // * the cluster is used by the context we switched to
-        assertEquals("---\n" +
-                "clusters:\n" +
-                "- cluster:\n" +
-                "    server: \"https://existing-cluster\"\n" +
-                "  name: \"existing-cluster\"\n" +
-                "- cluster:\n" +
-                "    insecure-skip-tls-verify: true\n" +
-                "    server: \"https://localhost:6443\"\n" +
-                "  name: \"k8s\"\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    cluster: \"existing-cluster\"\n" +
-                "    namespace: \"existing-namespace\"\n" +
-                "  name: \"existing-context\"\n" +
-                "- context:\n" +
-                "    cluster: \"k8s\"\n" +
-                "    namespace: \"new-namespace\"\n" +
-                "  name: \"unused-context\"\n" +
-                "current-context: \"unused-context\"\n" +
-                "users:\n" +
-                "- name: \"existing-credential\"\n" +
-                "  user:\n" +
-                "    password: \"existing-password\"\n" +
-                "    username: \"existing-user\"\n", configDumpContent);
+        assertEquals("""
+                ---
+                clusters:
+                - cluster:
+                    server: "https://existing-cluster"
+                  name: "existing-cluster"
+                - cluster:
+                    insecure-skip-tls-verify: true
+                    server: "https://localhost:6443"
+                  name: "k8s"
+                contexts:
+                - context:
+                    cluster: "existing-cluster"
+                    namespace: "existing-namespace"
+                  name: "existing-context"
+                - context:
+                    cluster: "k8s"
+                    namespace: "new-namespace"
+                  name: "unused-context"
+                current-context: "unused-context"
+                users:
+                - name: "existing-credential"
+                  user:
+                    password: "existing-password"
+                    username: "existing-user"
+                """, configDumpContent);
     }
 
     @Test
@@ -586,34 +612,36 @@ public class KubeConfigWriterBuilderTest {
         // * a new cluster is created with the serverURL
         // * the cluster is used by the context we created
         // * the namespace is set in the context we created
-        assertEquals("---\n" +
-                "clusters:\n" +
-                "- cluster:\n" +
-                "    server: \"https://existing-cluster\"\n" +
-                "  name: \"existing-cluster\"\n" +
-                "- cluster:\n" +
-                "    insecure-skip-tls-verify: true\n" +
-                "    server: \"https://localhost:6443\"\n" +
-                "  name: \"k8s\"\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    cluster: \"existing-cluster\"\n" +
-                "    namespace: \"existing-namespace\"\n" +
-                "  name: \"existing-context\"\n" +
-                "- context:\n" +
-                "    cluster: \"existing-cluster\"\n" +
-                "    namespace: \"unused-namespace\"\n" +
-                "  name: \"unused-context\"\n" +
-                "- context:\n" +
-                "    cluster: \"k8s\"\n" +
-                "    namespace: \"new-namespace\"\n" +
-                "  name: \"non-existent-context\"\n" +
-                "current-context: \"non-existent-context\"\n" +
-                "users:\n" +
-                "- name: \"existing-credential\"\n" +
-                "  user:\n" +
-                "    password: \"existing-password\"\n" +
-                "    username: \"existing-user\"\n", configDumpContent);
+        assertEquals("""
+                ---
+                clusters:
+                - cluster:
+                    server: "https://existing-cluster"
+                  name: "existing-cluster"
+                - cluster:
+                    insecure-skip-tls-verify: true
+                    server: "https://localhost:6443"
+                  name: "k8s"
+                contexts:
+                - context:
+                    cluster: "existing-cluster"
+                    namespace: "existing-namespace"
+                  name: "existing-context"
+                - context:
+                    cluster: "existing-cluster"
+                    namespace: "unused-namespace"
+                  name: "unused-context"
+                - context:
+                    cluster: "k8s"
+                    namespace: "new-namespace"
+                  name: "non-existent-context"
+                current-context: "non-existent-context"
+                users:
+                - name: "existing-credential"
+                  user:
+                    password: "existing-password"
+                    username: "existing-user"
+                """, configDumpContent);
         assertEquals("[kubernetes-cli] context 'non-existent-context' doesn't exist in kubeconfig",
                 output.toString());
     }
@@ -634,29 +662,31 @@ public class KubeConfigWriterBuilderTest {
         ConfigBuilder configBuilder = configWriter.getConfigBuilderWithAuth("test-credential", auth);
         String configDumpContent = dumpBuilder(configBuilder);
 
-        assertEquals("---\n" +
-                "clusters:\n" +
-                "- cluster:\n" +
-                "    server: \"https://existing-cluster\"\n" +
-                "  name: \"existing-cluster\"\n" +
-                "- cluster:\n" +
-                "    insecure-skip-tls-verify: true\n" +
-                "    server: \"https://localhost:6443\"\n" +
-                "  name: \"k8s\"\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    cluster: \"k8s\"\n" +
-                "    namespace: \"existing-namespace\"\n" +
-                "  name: \"existing-context\"\n" +
-                "- context:\n" +
-                "    cluster: \"existing-cluster\"\n" +
-                "    namespace: \"unused-namespace\"\n" +
-                "  name: \"unused-context\"\n" +
-                "current-context: \"existing-context\"\n" +
-                "users:\n" +
-                "- name: \"existing-credential\"\n" +
-                "  user:\n" +
-                "    password: \"existing-password\"\n" +
-                "    username: \"existing-user\"\n", configDumpContent);
+        assertEquals("""
+                ---
+                clusters:
+                - cluster:
+                    server: "https://existing-cluster"
+                  name: "existing-cluster"
+                - cluster:
+                    insecure-skip-tls-verify: true
+                    server: "https://localhost:6443"
+                  name: "k8s"
+                contexts:
+                - context:
+                    cluster: "k8s"
+                    namespace: "existing-namespace"
+                  name: "existing-context"
+                - context:
+                    cluster: "existing-cluster"
+                    namespace: "unused-namespace"
+                  name: "unused-context"
+                current-context: "existing-context"
+                users:
+                - name: "existing-credential"
+                  user:
+                    password: "existing-password"
+                    username: "existing-user"
+                """, configDumpContent);
     }
 }
