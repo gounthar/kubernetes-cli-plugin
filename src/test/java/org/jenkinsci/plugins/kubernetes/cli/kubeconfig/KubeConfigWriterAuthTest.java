@@ -65,23 +65,25 @@ public class KubeConfigWriterAuthTest {
         ConfigBuilder configBuilder = configWriter.getConfigBuilderWithAuth("test-credential", auth);
         String configDumpContent = dumpBuilder(configBuilder);
 
-        assertEquals("---\n" +
-                "clusters:\n" +
-                "- cluster:\n" +
-                "    insecure-skip-tls-verify: true\n" +
-                "    server: \"https://localhost:6443\"\n" +
-                "  name: \"k8s\"\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    cluster: \"k8s\"\n" +
-                "    user: \"test-credential\"\n" +
-                "  name: \"k8s\"\n" +
-                "current-context: \"k8s\"\n" +
-                "users:\n" +
-                "- name: \"test-credential\"\n" +
-                "  user:\n" +
-                "    password: \"test-password\"\n" +
-                "    username: \"test-user\"\n", configDumpContent);
+        assertEquals("""
+                ---
+                clusters:
+                - cluster:
+                    insecure-skip-tls-verify: true
+                    server: "https://localhost:6443"
+                  name: "k8s"
+                contexts:
+                - context:
+                    cluster: "k8s"
+                    user: "test-credential"
+                  name: "k8s"
+                current-context: "k8s"
+                users:
+                - name: "test-credential"
+                  user:
+                    password: "test-password"
+                    username: "test-user"
+                """, configDumpContent);
     }
 
     @Before
@@ -117,23 +119,25 @@ public class KubeConfigWriterAuthTest {
         ConfigBuilder configBuilder = configWriter.getConfigBuilderWithAuth("test-credential", auth);
         String configDumpContent = dumpBuilder(configBuilder);
 
-        assertEquals("---\n" +
-                "clusters:\n" +
-                "- cluster:\n" +
-                "    insecure-skip-tls-verify: true\n" +
-                "    server: \"https://localhost:6443\"\n" +
-                "  name: \"k8s\"\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    cluster: \"k8s\"\n" +
-                "    user: \"test-credential\"\n" +
-                "  name: \"k8s\"\n" +
-                "current-context: \"k8s\"\n" +
-                "users:\n" +
-                "- name: \"test-credential\"\n" +
-                "  user:\n" +
-                "    client-certificate-data: \"LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNhekNDQWRRQ0NRRFZ0VnhhSHZxcXR6QU5CZ2txaGtpRzl3MEJBUVVGQURCNk1Rc3dDUVlEVlFRR0V3SkJWVEVUTUJFR0ExVUVDQk1LVTI5dFpTMVRkR0YwWlRFUU1BNEdBMVVFQ2hNSFNtVnVhMmx1Y3pFYU1CZ0dBMVVFQXhNUlMzVmlaWEp1WlhSbGN5MVZjMlZ5TFRFeEtEQW1CZ2txaGtpRzl3MEJDUUVXR1d0MVltVnlibVYwWlhNdGRYTmxjaTB4UUdwbGJtdHBibk13SGhjTk1UY3hNREF6TVRJMU56VTVXaGNOTVRneE1EQXpNVEkxTnpVNVdqQjZNUXN3Q1FZRFZRUUdFd0pCVlRFVE1CRUdBMVVFQ0JNS1UyOXRaUzFUZEdGMFpURVFNQTRHQTFVRUNoTUhTbVZ1YTJsdWN6RWFNQmdHQTFVRUF4TVJTM1ZpWlhKdVpYUmxjeTFWYzJWeUxURXhLREFtQmdrcWhraUc5dzBCQ1FFV0dXdDFZbVZ5Ym1WMFpYTXRkWE5sY2kweFFHcGxibXRwYm5Nd2daOHdEUVlKS29aSWh2Y05BUUVCQlFBRGdZMEFNSUdKQW9HQkFMS0ViejIrbGpwN3dNTEZYckdhVEZ4M25HUUE0c1dsWGtLcGdqYjYrd1U3ZTdYVDFuOHFoOGpEeVNITDRHVUp1TjVUTUNONTZOQ3g3Y013SHdYZmRyUlhHZFB0UkxZcUdBSStENnFZWlRsQzhzSFNyTFZXU1ZZQ01IaElIZEZ6QmxJN2t3RVh2RW1JcVIvMVJXS2dHMG1sQnhpQjVmbmxXbmphME9UdDRpY2hBZ01CQUFFd0RRWUpLb1pJaHZjTkFRRUZCUUFEZ1lFQUZIdktxTU5vdStpZE5aQ2FKSjZ4MnUweHJreEJHMDFVYnNteHlWd1Q1dWlDck96c3cveGk5SVc0dmpGRmtKZXpNMlJxc0NHaEZvRFA0aTY0U0srK0NYbXJ6VVJ4UUpJYi9xeEdqRUM4SDR5QVU2dGs3YStoellYVWt4bnZsK0F5OWc5WnBWR3Z5a1krbHlGNEJkdnlYZ2I5aGVBbGp3azRtdHRoNmdVeXdaRT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQ==\"\n" +
-                "    client-key-data: \"LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUNkUUlCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQWw4d2dnSmJBZ0VBQW9HQkFMS0ViejIrbGpwN3dNTEZYckdhVEZ4M25HUUE0c1dsWGtLcGdqYjYrd1U3ZTdYVDFuOHFoOGpEeVNITDRHVUp1TjVUTUNONTZOQ3g3Y013SHdYZmRyUlhHZFB0UkxZcUdBSStENnFZWlRsQzhzSFNyTFZXU1ZZQ01IaElIZEZ6QmxJN2t3RVh2RW1JcVIvMVJXS2dHMG1sQnhpQjVmbmxXbmphME9UdDRpY2hBZ01CQUFFQ2dZQUdFN29SdVFZMk1YWkxheHFoSXlhTVUwb1FvWE1XMVYxVEdhQWtMUUVVbVlUSm1NK0pmckltcEh1WldlNW1vaUVYK0c4QUZpdFZ4MmpYcHpDM0szZEg5OEZCOXJrcmZGamJaWEpQOG1kaHVUUXo1eVEwVkZ5c1gvRStzZi9ZdE5sNjNxd2dDQU1POEU4TkRYUnA3NDFwTWpyRXA2cHk1d1JWRHo3aDdnY3dBUUpCQU9kNExXSjlpQ09DOWpQQmR1QVZXcVJsMW81b3dDR3RWcHlCV25OMHZENFZRMk5ZZko2WVBWYXZreDJMU1p6eEdGMzllWDFCemRFVVEvTHJRWThINXFFQ1FRREZiNmM3bG1Od09ZSXh6OUlhWWZ3b0krblpwMFpFTnUrYk14M3EyL01NRWdYREhhS2l5Sm1peGFTbTUvT2IybHVMcVFTRTZvKzluUStwWGQ5a3NQQ0JBa0FMQ21wdnhqa1dLSXNCMFBxUW1iUW5IMHhxb29oM2tzTU0yQWF1ZHlUN2VSd3J3dTYreWRnektGREdHZnk2NWEwWjNwdEs1RGFqQUdwMVRjOWt1U1hCQWtBU29UNStlT3BaSkpRTWJ6ZThGWkxkbHNYeUs3Nk5vVUZxdTZBUEVVSVYyWDJCczhJczZoRFZNeUVlUHJUVjkveTdhTzlzTzFYazVuVWIzaWUrTUpRQkFrQngrNWRWTHh1UVJ3YUZVOTJsQ2syR2p5Rk9XN0MvMk55bFlKUldlNDd1NkRqOCt6R0NPblZFaGlNQlpJMHppbWdRWDlVaHVkT1NSQis5YzRYWFNFTzUKLS0tLS1FTkQgUFJJVkFURSBLRVktLS0tCg==\"\n", configDumpContent);
+        assertEquals("""
+                ---
+                clusters:
+                - cluster:
+                    insecure-skip-tls-verify: true
+                    server: "https://localhost:6443"
+                  name: "k8s"
+                contexts:
+                - context:
+                    cluster: "k8s"
+                    user: "test-credential"
+                  name: "k8s"
+                current-context: "k8s"
+                users:
+                - name: "test-credential"
+                  user:
+                    client-certificate-data: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNhekNDQWRRQ0NRRFZ0VnhhSHZxcXR6QU5CZ2txaGtpRzl3MEJBUVVGQURCNk1Rc3dDUVlEVlFRR0V3SkJWVEVUTUJFR0ExVUVDQk1LVTI5dFpTMVRkR0YwWlRFUU1BNEdBMVVFQ2hNSFNtVnVhMmx1Y3pFYU1CZ0dBMVVFQXhNUlMzVmlaWEp1WlhSbGN5MVZjMlZ5TFRFeEtEQW1CZ2txaGtpRzl3MEJDUUVXR1d0MVltVnlibVYwWlhNdGRYTmxjaTB4UUdwbGJtdHBibk13SGhjTk1UY3hNREF6TVRJMU56VTVXaGNOTVRneE1EQXpNVEkxTnpVNVdqQjZNUXN3Q1FZRFZRUUdFd0pCVlRFVE1CRUdBMVVFQ0JNS1UyOXRaUzFUZEdGMFpURVFNQTRHQTFVRUNoTUhTbVZ1YTJsdWN6RWFNQmdHQTFVRUF4TVJTM1ZpWlhKdVpYUmxjeTFWYzJWeUxURXhLREFtQmdrcWhraUc5dzBCQ1FFV0dXdDFZbVZ5Ym1WMFpYTXRkWE5sY2kweFFHcGxibXRwYm5Nd2daOHdEUVlKS29aSWh2Y05BUUVCQlFBRGdZMEFNSUdKQW9HQkFMS0ViejIrbGpwN3dNTEZYckdhVEZ4M25HUUE0c1dsWGtLcGdqYjYrd1U3ZTdYVDFuOHFoOGpEeVNITDRHVUp1TjVUTUNONTZOQ3g3Y013SHdYZmRyUlhHZFB0UkxZcUdBSStENnFZWlRsQzhzSFNyTFZXU1ZZQ01IaElIZEZ6QmxJN2t3RVh2RW1JcVIvMVJXS2dHMG1sQnhpQjVmbmxXbmphME9UdDRpY2hBZ01CQUFFd0RRWUpLb1pJaHZjTkFRRUZCUUFEZ1lFQUZIdktxTU5vdStpZE5aQ2FKSjZ4MnUweHJreEJHMDFVYnNteHlWd1Q1dWlDck96c3cveGk5SVc0dmpGRmtKZXpNMlJxc0NHaEZvRFA0aTY0U0srK0NYbXJ6VVJ4UUpJYi9xeEdqRUM4SDR5QVU2dGs3YStoellYVWt4bnZsK0F5OWc5WnBWR3Z5a1krbHlGNEJkdnlYZ2I5aGVBbGp3azRtdHRoNmdVeXdaRT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQ=="
+                    client-key-data: "LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUNkUUlCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQWw4d2dnSmJBZ0VBQW9HQkFMS0ViejIrbGpwN3dNTEZYckdhVEZ4M25HUUE0c1dsWGtLcGdqYjYrd1U3ZTdYVDFuOHFoOGpEeVNITDRHVUp1TjVUTUNONTZOQ3g3Y013SHdYZmRyUlhHZFB0UkxZcUdBSStENnFZWlRsQzhzSFNyTFZXU1ZZQ01IaElIZEZ6QmxJN2t3RVh2RW1JcVIvMVJXS2dHMG1sQnhpQjVmbmxXbmphME9UdDRpY2hBZ01CQUFFQ2dZQUdFN29SdVFZMk1YWkxheHFoSXlhTVUwb1FvWE1XMVYxVEdhQWtMUUVVbVlUSm1NK0pmckltcEh1WldlNW1vaUVYK0c4QUZpdFZ4MmpYcHpDM0szZEg5OEZCOXJrcmZGamJaWEpQOG1kaHVUUXo1eVEwVkZ5c1gvRStzZi9ZdE5sNjNxd2dDQU1POEU4TkRYUnA3NDFwTWpyRXA2cHk1d1JWRHo3aDdnY3dBUUpCQU9kNExXSjlpQ09DOWpQQmR1QVZXcVJsMW81b3dDR3RWcHlCV25OMHZENFZRMk5ZZko2WVBWYXZreDJMU1p6eEdGMzllWDFCemRFVVEvTHJRWThINXFFQ1FRREZiNmM3bG1Od09ZSXh6OUlhWWZ3b0krblpwMFpFTnUrYk14M3EyL01NRWdYREhhS2l5Sm1peGFTbTUvT2IybHVMcVFTRTZvKzluUStwWGQ5a3NQQ0JBa0FMQ21wdnhqa1dLSXNCMFBxUW1iUW5IMHhxb29oM2tzTU0yQWF1ZHlUN2VSd3J3dTYreWRnektGREdHZnk2NWEwWjNwdEs1RGFqQUdwMVRjOWt1U1hCQWtBU29UNStlT3BaSkpRTWJ6ZThGWkxkbHNYeUs3Nk5vVUZxdTZBUEVVSVYyWDJCczhJczZoRFZNeUVlUHJUVjkveTdhTzlzTzFYazVuVWIzaWUrTUpRQkFrQngrNWRWTHh1UVJ3YUZVOTJsQ2syR2p5Rk9XN0MvMk55bFlKUldlNDd1NkRqOCt6R0NPblZFaGlNQlpJMHppbWdRWDlVaHVkT1NSQis5YzRYWFNFTzUKLS0tLS1FTkQgUFJJVkFURSBLRVktLS0tCg=="
+                """, configDumpContent);
     }
 
     @Test
@@ -153,22 +157,24 @@ public class KubeConfigWriterAuthTest {
         ConfigBuilder configBuilder = configWriter.getConfigBuilderWithAuth("test-credential", auth);
         String configDumpContent = dumpBuilder(configBuilder);
 
-        assertEquals("---\n" +
-                "clusters:\n" +
-                "- cluster:\n" +
-                "    insecure-skip-tls-verify: true\n" +
-                "    server: \"https://localhost:6443\"\n" +
-                "  name: \"k8s\"\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    cluster: \"k8s\"\n" +
-                "    user: \"test-credential\"\n" +
-                "  name: \"k8s\"\n" +
-                "current-context: \"k8s\"\n" +
-                "users:\n" +
-                "- name: \"test-credential\"\n" +
-                "  user:\n" +
-                "    token: \"faketoken:test:test\"\n", configDumpContent);
+        assertEquals("""
+                ---
+                clusters:
+                - cluster:
+                    insecure-skip-tls-verify: true
+                    server: "https://localhost:6443"
+                  name: "k8s"
+                contexts:
+                - context:
+                    cluster: "k8s"
+                    user: "test-credential"
+                  name: "k8s"
+                current-context: "k8s"
+                users:
+                - name: "test-credential"
+                  user:
+                    token: "faketoken:test:test"
+                """, configDumpContent);
     }
 
     @Test
@@ -191,23 +197,25 @@ public class KubeConfigWriterAuthTest {
             ConfigBuilder configBuilder = configWriter.getConfigBuilderWithAuth("test-credential", auth);
             String configDumpContent = dumpBuilder(configBuilder);
 
-            assertEquals("---\n" +
-                    "clusters:\n" +
-                    "- cluster:\n" +
-                    "    insecure-skip-tls-verify: true\n" +
-                    "    server: \"https://localhost:6443\"\n" +
-                    "  name: \"k8s\"\n" +
-                    "contexts:\n" +
-                    "- context:\n" +
-                    "    cluster: \"k8s\"\n" +
-                    "    user: \"test-credential\"\n" +
-                    "  name: \"k8s\"\n" +
-                    "current-context: \"k8s\"\n" +
-                    "users:\n" +
-                    "- name: \"test-credential\"\n" +
-                    "  user:\n" +
-                    "    client-certificate-data: \"LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNhekNDQWRRQ0NRRFZ0VnhhSHZxcXR6QU5CZ2txaGtpRzl3MEJBUVVGQURCNk1Rc3dDUVlEVlFRR0V3SkJWVEVUTUJFR0ExVUVDQk1LVTI5dFpTMVRkR0YwWlRFUU1BNEdBMVVFQ2hNSFNtVnVhMmx1Y3pFYU1CZ0dBMVVFQXhNUlMzVmlaWEp1WlhSbGN5MVZjMlZ5TFRFeEtEQW1CZ2txaGtpRzl3MEJDUUVXR1d0MVltVnlibVYwWlhNdGRYTmxjaTB4UUdwbGJtdHBibk13SGhjTk1UY3hNREF6TVRJMU56VTVXaGNOTVRneE1EQXpNVEkxTnpVNVdqQjZNUXN3Q1FZRFZRUUdFd0pCVlRFVE1CRUdBMVVFQ0JNS1UyOXRaUzFUZEdGMFpURVFNQTRHQTFVRUNoTUhTbVZ1YTJsdWN6RWFNQmdHQTFVRUF4TVJTM1ZpWlhKdVpYUmxjeTFWYzJWeUxURXhLREFtQmdrcWhraUc5dzBCQ1FFV0dXdDFZbVZ5Ym1WMFpYTXRkWE5sY2kweFFHcGxibXRwYm5Nd2daOHdEUVlKS29aSWh2Y05BUUVCQlFBRGdZMEFNSUdKQW9HQkFMS0ViejIrbGpwN3dNTEZYckdhVEZ4M25HUUE0c1dsWGtLcGdqYjYrd1U3ZTdYVDFuOHFoOGpEeVNITDRHVUp1TjVUTUNONTZOQ3g3Y013SHdYZmRyUlhHZFB0UkxZcUdBSStENnFZWlRsQzhzSFNyTFZXU1ZZQ01IaElIZEZ6QmxJN2t3RVh2RW1JcVIvMVJXS2dHMG1sQnhpQjVmbmxXbmphME9UdDRpY2hBZ01CQUFFd0RRWUpLb1pJaHZjTkFRRUZCUUFEZ1lFQUZIdktxTU5vdStpZE5aQ2FKSjZ4MnUweHJreEJHMDFVYnNteHlWd1Q1dWlDck96c3cveGk5SVc0dmpGRmtKZXpNMlJxc0NHaEZvRFA0aTY0U0srK0NYbXJ6VVJ4UUpJYi9xeEdqRUM4SDR5QVU2dGs3YStoellYVWt4bnZsK0F5OWc5WnBWR3Z5a1krbHlGNEJkdnlYZ2I5aGVBbGp3azRtdHRoNmdVeXdaRT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQ==\"\n" +
-                    "    client-key-data: \"LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUNkUUlCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQWw4d2dnSmJBZ0VBQW9HQkFMS0ViejIrbGpwN3dNTEZYckdhVEZ4M25HUUE0c1dsWGtLcGdqYjYrd1U3ZTdYVDFuOHFoOGpEeVNITDRHVUp1TjVUTUNONTZOQ3g3Y013SHdYZmRyUlhHZFB0UkxZcUdBSStENnFZWlRsQzhzSFNyTFZXU1ZZQ01IaElIZEZ6QmxJN2t3RVh2RW1JcVIvMVJXS2dHMG1sQnhpQjVmbmxXbmphME9UdDRpY2hBZ01CQUFFQ2dZQUdFN29SdVFZMk1YWkxheHFoSXlhTVUwb1FvWE1XMVYxVEdhQWtMUUVVbVlUSm1NK0pmckltcEh1WldlNW1vaUVYK0c4QUZpdFZ4MmpYcHpDM0szZEg5OEZCOXJrcmZGamJaWEpQOG1kaHVUUXo1eVEwVkZ5c1gvRStzZi9ZdE5sNjNxd2dDQU1POEU4TkRYUnA3NDFwTWpyRXA2cHk1d1JWRHo3aDdnY3dBUUpCQU9kNExXSjlpQ09DOWpQQmR1QVZXcVJsMW81b3dDR3RWcHlCV25OMHZENFZRMk5ZZko2WVBWYXZreDJMU1p6eEdGMzllWDFCemRFVVEvTHJRWThINXFFQ1FRREZiNmM3bG1Od09ZSXh6OUlhWWZ3b0krblpwMFpFTnUrYk14M3EyL01NRWdYREhhS2l5Sm1peGFTbTUvT2IybHVMcVFTRTZvKzluUStwWGQ5a3NQQ0JBa0FMQ21wdnhqa1dLSXNCMFBxUW1iUW5IMHhxb29oM2tzTU0yQWF1ZHlUN2VSd3J3dTYreWRnektGREdHZnk2NWEwWjNwdEs1RGFqQUdwMVRjOWt1U1hCQWtBU29UNStlT3BaSkpRTWJ6ZThGWkxkbHNYeUs3Nk5vVUZxdTZBUEVVSVYyWDJCczhJczZoRFZNeUVlUHJUVjkveTdhTzlzTzFYazVuVWIzaWUrTUpRQkFrQngrNWRWTHh1UVJ3YUZVOTJsQ2syR2p5Rk9XN0MvMk55bFlKUldlNDd1NkRqOCt6R0NPblZFaGlNQlpJMHppbWdRWDlVaHVkT1NSQis5YzRYWFNFTzUKLS0tLS1FTkQgUFJJVkFURSBLRVktLS0tLQ==\"\n", configDumpContent);
+            assertEquals("""
+                    ---
+                    clusters:
+                    - cluster:
+                        insecure-skip-tls-verify: true
+                        server: "https://localhost:6443"
+                      name: "k8s"
+                    contexts:
+                    - context:
+                        cluster: "k8s"
+                        user: "test-credential"
+                      name: "k8s"
+                    current-context: "k8s"
+                    users:
+                    - name: "test-credential"
+                      user:
+                        client-certificate-data: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNhekNDQWRRQ0NRRFZ0VnhhSHZxcXR6QU5CZ2txaGtpRzl3MEJBUVVGQURCNk1Rc3dDUVlEVlFRR0V3SkJWVEVUTUJFR0ExVUVDQk1LVTI5dFpTMVRkR0YwWlRFUU1BNEdBMVVFQ2hNSFNtVnVhMmx1Y3pFYU1CZ0dBMVVFQXhNUlMzVmlaWEp1WlhSbGN5MVZjMlZ5TFRFeEtEQW1CZ2txaGtpRzl3MEJDUUVXR1d0MVltVnlibVYwWlhNdGRYTmxjaTB4UUdwbGJtdHBibk13SGhjTk1UY3hNREF6TVRJMU56VTVXaGNOTVRneE1EQXpNVEkxTnpVNVdqQjZNUXN3Q1FZRFZRUUdFd0pCVlRFVE1CRUdBMVVFQ0JNS1UyOXRaUzFUZEdGMFpURVFNQTRHQTFVRUNoTUhTbVZ1YTJsdWN6RWFNQmdHQTFVRUF4TVJTM1ZpWlhKdVpYUmxjeTFWYzJWeUxURXhLREFtQmdrcWhraUc5dzBCQ1FFV0dXdDFZbVZ5Ym1WMFpYTXRkWE5sY2kweFFHcGxibXRwYm5Nd2daOHdEUVlKS29aSWh2Y05BUUVCQlFBRGdZMEFNSUdKQW9HQkFMS0ViejIrbGpwN3dNTEZYckdhVEZ4M25HUUE0c1dsWGtLcGdqYjYrd1U3ZTdYVDFuOHFoOGpEeVNITDRHVUp1TjVUTUNONTZOQ3g3Y013SHdYZmRyUlhHZFB0UkxZcUdBSStENnFZWlRsQzhzSFNyTFZXU1ZZQ01IaElIZEZ6QmxJN2t3RVh2RW1JcVIvMVJXS2dHMG1sQnhpQjVmbmxXbmphME9UdDRpY2hBZ01CQUFFd0RRWUpLb1pJaHZjTkFRRUZCUUFEZ1lFQUZIdktxTU5vdStpZE5aQ2FKSjZ4MnUweHJreEJHMDFVYnNteHlWd1Q1dWlDck96c3cveGk5SVc0dmpGRmtKZXpNMlJxc0NHaEZvRFA0aTY0U0srK0NYbXJ6VVJ4UUpJYi9xeEdqRUM4SDR5QVU2dGs3YStoellYVWt4bnZsK0F5OWc5WnBWR3Z5a1krbHlGNEJkdnlYZ2I5aGVBbGp3azRtdHRoNmdVeXdaRT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQ=="
+                        client-key-data: "LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUNkUUlCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQWw4d2dnSmJBZ0VBQW9HQkFMS0ViejIrbGpwN3dNTEZYckdhVEZ4M25HUUE0c1dsWGtLcGdqYjYrd1U3ZTdYVDFuOHFoOGpEeVNITDRHVUp1TjVUTUNONTZOQ3g3Y013SHdYZmRyUlhHZFB0UkxZcUdBSStENnFZWlRsQzhzSFNyTFZXU1ZZQ01IaElIZEZ6QmxJN2t3RVh2RW1JcVIvMVJXS2dHMG1sQnhpQjVmbmxXbmphME9UdDRpY2hBZ01CQUFFQ2dZQUdFN29SdVFZMk1YWkxheHFoSXlhTVUwb1FvWE1XMVYxVEdhQWtMUUVVbVlUSm1NK0pmckltcEh1WldlNW1vaUVYK0c4QUZpdFZ4MmpYcHpDM0szZEg5OEZCOXJrcmZGamJaWEpQOG1kaHVUUXo1eVEwVkZ5c1gvRStzZi9ZdE5sNjNxd2dDQU1POEU4TkRYUnA3NDFwTWpyRXA2cHk1d1JWRHo3aDdnY3dBUUpCQU9kNExXSjlpQ09DOWpQQmR1QVZXcVJsMW81b3dDR3RWcHlCV25OMHZENFZRMk5ZZko2WVBWYXZreDJMU1p6eEdGMzllWDFCemRFVVEvTHJRWThINXFFQ1FRREZiNmM3bG1Od09ZSXh6OUlhWWZ3b0krblpwMFpFTnUrYk14M3EyL01NRWdYREhhS2l5Sm1peGFTbTUvT2IybHVMcVFTRTZvKzluUStwWGQ5a3NQQ0JBa0FMQ21wdnhqa1dLSXNCMFBxUW1iUW5IMHhxb29oM2tzTU0yQWF1ZHlUN2VSd3J3dTYreWRnektGREdHZnk2NWEwWjNwdEs1RGFqQUdwMVRjOWt1U1hCQWtBU29UNStlT3BaSkpRTWJ6ZThGWkxkbHNYeUs3Nk5vVUZxdTZBUEVVSVYyWDJCczhJczZoRFZNeUVlUHJUVjkveTdhTzlzTzFYazVuVWIzaWUrTUpRQkFrQngrNWRWTHh1UVJ3YUZVOTJsQ2syR2p5Rk9XN0MvMk55bFlKUldlNDd1NkRqOCt6R0NPblZFaGlNQlpJMHppbWdRWDlVaHVkT1NSQis5YzRYWFNFTzUKLS0tLS1FTkQgUFJJVkFURSBLRVktLS0tLQ=="
+                    """, configDumpContent);
         }
     }
 }

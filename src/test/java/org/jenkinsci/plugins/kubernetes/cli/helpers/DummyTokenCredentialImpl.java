@@ -5,12 +5,15 @@ import com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl;
 
 import org.jenkinsci.plugins.kubernetes.credentials.TokenProducer;
 
+import java.io.Serial;
+
 public class DummyTokenCredentialImpl extends UsernamePasswordCredentialsImpl implements TokenProducer {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+     * 
+     */
+    @Serial
+    private static final long serialVersionUID = 1L;
 
 	public DummyTokenCredentialImpl(CredentialsScope scope, String id, String description, String username,
             String password) {

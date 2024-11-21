@@ -115,25 +115,26 @@ public class KubectlIntegrationTest {
         assertTrue(configDump.exists());
         String configDumpContent = configDump.readToString().trim();
 
-        assertThat(configDumpContent, containsString("apiVersion: v1\n" +
-                "clusters:\n" +
-                "- cluster:\n" +
-                "    insecure-skip-tls-verify: true\n" +
-                "    server: https://localhost:6443\n" +
-                "  name: k8s\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    cluster: k8s\n" +
-                "    user: test-credentials\n" +
-                "  name: k8s\n" +
-                "current-context: k8s\n" +
-                "kind: Config\n" +
-                "preferences: {}\n" +
-                "users:\n" +
-                "- name: test-credentials\n" +
-                "  user:\n" +
-                "    password: s3cr3t\n" +
-                "    username: bob"));
+        assertThat(configDumpContent, containsString("""
+                apiVersion: v1
+                clusters:
+                - cluster:
+                    insecure-skip-tls-verify: true
+                    server: https://localhost:6443
+                  name: k8s
+                contexts:
+                - context:
+                    cluster: k8s
+                    user: test-credentials
+                  name: k8s
+                current-context: k8s
+                kind: Config
+                preferences: {}
+                users:
+                - name: test-credentials
+                  user:
+                    password: s3cr3t
+                    username: bob"""));
     }
 
     @Test
@@ -155,33 +156,35 @@ public class KubectlIntegrationTest {
         assertTrue(configDump.exists());
         String configDumpContent = configDump.readToString().trim();
 
-        assertThat(configDumpContent, containsString("apiVersion: v1\n" +
-                "clusters:\n" +
-                "- cluster:\n" +
-                "    insecure-skip-tls-verify: true\n" +
-                "    server: https://test-cluster\n" +
-                "  name: test-cluster\n" +
-                "- cluster:\n" +
-                "    insecure-skip-tls-verify: true\n" +
-                "    server: https://test-cluster2\n" +
-                "  name: test-cluster2\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    cluster: test-cluster\n" +
-                "    user: test-user\n" +
-                "  name: test-cluster\n" +
-                "- context:\n" +
-                "    cluster: test-cluster2\n" +
-                "    user: test-user2\n" +
-                "  name: test-cluster2\n" +
-                "current-context: test-cluster\n" +
-                "kind: Config\n" +
-                "preferences: {}\n" +
-                "users:\n" +
-                "- name: test-user\n" +
-                "  user: {}\n" +
-                "- name: test-user2\n" +
-                "  user: {}"));
+        assertThat(configDumpContent, containsString("""
+                apiVersion: v1
+                clusters:
+                - cluster:
+                    insecure-skip-tls-verify: true
+                    server: https://test-cluster
+                  name: test-cluster
+                - cluster:
+                    insecure-skip-tls-verify: true
+                    server: https://test-cluster2
+                  name: test-cluster2
+                contexts:
+                - context:
+                    cluster: test-cluster
+                    user: test-user
+                  name: test-cluster
+                - context:
+                    cluster: test-cluster2
+                    user: test-user2
+                  name: test-cluster2
+                current-context: test-cluster
+                kind: Config
+                preferences: {}
+                users:
+                - name: test-user
+                  user: {}
+                - name: test-user2
+                  user: {}\
+                """));
     }
 
     @Test
@@ -265,37 +268,39 @@ public class KubectlIntegrationTest {
         assertTrue(configDump.exists());
         String configDumpContent = configDump.readToString().trim();
 
-        assertThat(configDumpContent, containsString("apiVersion: v1\n" +
-                "clusters:\n" +
-                "- cluster:\n" +
-                "    insecure-skip-tls-verify: true\n" +
-                "    server: https://localhost:9999\n" +
-                "  name: cred9999\n" +
-                "- cluster:\n" +
-                "    insecure-skip-tls-verify: true\n" +
-                "    server: https://test-cluster\n" +
-                "  name: test-cluster\n" +
-                "- cluster:\n" +
-                "    insecure-skip-tls-verify: true\n" +
-                "    server: https://test-cluster2\n" +
-                "  name: test-cluster2\n" +
-                "contexts:\n" +
-                "- context:\n" +
-                "    cluster: test-cluster\n" +
-                "    user: test-user\n" +
-                "  name: test-cluster\n" +
-                "- context:\n" +
-                "    cluster: cred9999\n" +
-                "    user: test-user2\n" +
-                "  name: test-cluster2\n" +
-                "current-context: test-cluster\n" +
-                "kind: Config\n" +
-                "preferences: {}\n" +
-                "users:\n" +
-                "- name: test-user\n" +
-                "  user: {}\n" +
-                "- name: test-user2\n" +
-                "  user: {}"));
+        assertThat(configDumpContent, containsString("""
+                apiVersion: v1
+                clusters:
+                - cluster:
+                    insecure-skip-tls-verify: true
+                    server: https://localhost:9999
+                  name: cred9999
+                - cluster:
+                    insecure-skip-tls-verify: true
+                    server: https://test-cluster
+                  name: test-cluster
+                - cluster:
+                    insecure-skip-tls-verify: true
+                    server: https://test-cluster2
+                  name: test-cluster2
+                contexts:
+                - context:
+                    cluster: test-cluster
+                    user: test-user
+                  name: test-cluster
+                - context:
+                    cluster: cred9999
+                    user: test-user2
+                  name: test-cluster2
+                current-context: test-cluster
+                kind: Config
+                preferences: {}
+                users:
+                - name: test-user
+                  user: {}
+                - name: test-user2
+                  user: {}\
+                """));
     }
 
     @Test

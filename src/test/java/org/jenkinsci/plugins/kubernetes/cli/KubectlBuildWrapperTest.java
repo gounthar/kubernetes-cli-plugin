@@ -163,25 +163,26 @@ public class KubectlBuildWrapperTest {
         bw.credentialsId = "test-credentials";
         p.getBuildWrappersList().add(bw);
 
-        assertEquals("<?xml version='1.1' encoding='UTF-8'?>\n" +
-                "<project>\n" +
-                "  <keepDependencies>false</keepDependencies>\n" +
-                "  <properties/>\n" +
-                "  <scm class=\"hudson.scm.NullSCM\"/>\n" +
-                "  <canRoam>false</canRoam>\n" +
-                "  <disabled>false</disabled>\n" +
-                "  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>\n" +
-                "  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>\n" +
-                "  <triggers/>\n" +
-                "  <concurrentBuild>false</concurrentBuild>\n" +
-                "  <builders/>\n" +
-                "  <publishers/>\n" +
-                "  <buildWrappers>\n" +
-                "    <org.jenkinsci.plugins.kubernetes.cli.KubectlBuildWrapper>\n" +
-                "      <credentialsId>test-credentials</credentialsId>\n" +
-                "    </org.jenkinsci.plugins.kubernetes.cli.KubectlBuildWrapper>\n" +
-                "  </buildWrappers>\n" +
-                "</project>", p.getConfigFile().asString());
+        assertEquals("""
+                <?xml version='1.1' encoding='UTF-8'?>
+                <project>
+                  <keepDependencies>false</keepDependencies>
+                  <properties/>
+                  <scm class="hudson.scm.NullSCM"/>
+                  <canRoam>false</canRoam>
+                  <disabled>false</disabled>
+                  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+                  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+                  <triggers/>
+                  <concurrentBuild>false</concurrentBuild>
+                  <builders/>
+                  <publishers/>
+                  <buildWrappers>
+                    <org.jenkinsci.plugins.kubernetes.cli.KubectlBuildWrapper>
+                      <credentialsId>test-credentials</credentialsId>
+                    </org.jenkinsci.plugins.kubernetes.cli.KubectlBuildWrapper>
+                  </buildWrappers>
+                </project>""", p.getConfigFile().asString());
     }
 
     private boolean isPlatformWindow() {
